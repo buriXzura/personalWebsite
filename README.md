@@ -1,1 +1,3 @@
-# personalWebsite
+# persnalWebsite
+### React
+### mysql
