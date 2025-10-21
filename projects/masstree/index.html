@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReMassTree: High-Performance Persistent Memory B-link Tree</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+
+        .author-info {
+            font-style: italic;
+            color: #5d6d7e;
+            margin-top: 1rem;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .abstract {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .abstract h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .abstract p {
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .key-contributions {
+            margin: 2rem 0;
+        }
+
+        .key-contributions h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .contributions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contribution-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #e74c3c;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contribution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contribution-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .performance-highlights {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .performance-highlights h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .performance-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 10px;
+            min-width: 200px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            display: block;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .documents-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .documents-section h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .document-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .document-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #6c5ce7 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .document-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .document-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .document-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .document-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .keywords {
+            background: linear-gradient(135deg, #e17055 0%, #fdcb6e 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .keywords h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .keyword-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .keyword-tag {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .contributions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .performance-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ReMassTree</h1>
+            <div class="subtitle">A High-Performance Persistent Memory B-link Tree with Hierarchical Concurrency Control</div>
+            <div class="author-info">
+                Rahul Prajapat<br>
+                University of Sydney, School of Computer Science
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="abstract">
+                <h2>Abstract</h2>
+                <p>
+                    We present ReMassTree, a novel persistent memory (PMEM) optimized B-link tree implementation that addresses critical limitations in existing concurrent index structures. Our design introduces a hierarchical two-tier locking mechanism that enables lock-free reads and concurrent writes while maintaining crash consistency. ReMassTree resolves atomicity issues present in the RECIPE framework's structural modification operations and demonstrates superior performance characteristics compared to DRAM-based implementations.
+                </p>
+            </div>
+
+            <div class="performance-highlights">
+                <h2>Performance Highlights</h2>
+                <div class="performance-stats">
+                    <div class="stat">
+                        <span class="stat-number">3.159M</span>
+                        <div class="stat-label">Operations/Second<br>in PMEM</div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">99.99%</span>
+                        <div class="stat-label">Space Utilization<br>Efficiency</div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">40M</span>
+                        <div class="stat-label">Keys Evaluated<br>in Testing</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-contributions">
+                <h2>Key Contributions</h2>
+                <div class="contributions-grid">
+                    <div class="contribution-card">
+                        <h3>🔐 Hierarchical Concurrency Control</h3>
+                        <p>Novel two-tier locking mechanism with separate handling for simple writes and structural modifications, enabling optimal concurrent access patterns.</p>
+                    </div>
+                    <div class="contribution-card">
+                        <h3>🚀 Lock-Free Read Operations</h3>
+                        <p>Eliminates reader-writer contention through optimistic concurrency control with consistency guarantees and automatic retry mechanisms.</p>
+                    </div>
+                    <div class="contribution-card">
+                        <h3>⚡ RECIPE Framework Resolution</h3>
+                        <p>Addresses critical atomicity gaps in structural modification operations through version-based coordination and two-phase protocols.</p>
+                    </div>
+                    <div class="contribution-card">
+                        <h3>💾 PMEM-Native Optimizations</h3>
+                        <p>Cache-line aware node layouts, selective persistence, and atomic pointer updates optimized for persistent memory characteristics.</p>
+                    </div>
+                    <div class="contribution-card">
+                        <h3>📊 Superior Performance</h3>
+                        <p>Comprehensive evaluation demonstrating up to 3.159M ops/sec throughput improvements in persistent memory environments.</p>
+                    </div>
+                    <div class="contribution-card">
+                        <h3>🔄 Crash Consistency</h3>
+                        <p>Robust crash recovery mechanisms with version-based repair enabling fast post-crash recovery without extensive log replay.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="keywords">
+                <h3>Research Keywords</h3>
+                <div class="keyword-tags">
+                    <span class="keyword-tag">Persistent Memory</span>
+                    <span class="keyword-tag">B-trees</span>
+                    <span class="keyword-tag">Concurrent Data Structures</span>
+                    <span class="keyword-tag">Crash Consistency</span>
+                    <span class="keyword-tag">Index Structures</span>
+                    <span class="keyword-tag">PMEM Optimization</span>
+                    <span class="keyword-tag">Lock-Free Algorithms</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="documents-section">
+            <h2>Research Documents</h2>
+            <div class="document-links">
+                <a href="research_document.pdf" class="document-card" target="_blank">
+                    <span class="document-icon">📄</span>
+                    <h3>Research Document</h3>
+                    <p>Comprehensive research paper detailing the ReMassTree design, implementation, and theoretical foundations including algorithmic analysis and concurrent programming principles.</p>
+                </a>
+                
+                <a href="technical_report.pdf" class="document-card" target="_blank">
+                    <span class="document-icon">⚙️</span>
+                    <h3>Technical Report</h3>
+                    <p>Detailed technical implementation report covering system architecture, performance evaluation, experimental methodology, and benchmarking results.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

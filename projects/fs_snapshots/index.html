@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File System Metadata Snapshotting Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 50%, #bbe1fa 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .project-type {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid #0f4c75;
+        }
+
+        .executive-summary h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .executive-summary p {
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .innovation-highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid #f39c12;
+        }
+
+        .innovation-highlight strong {
+            color: #d68910;
+        }
+
+        .features-section {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .features-section h2 {
+            color: #155724;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #155724;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .architecture-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid #1976d2;
+        }
+
+        .architecture-section h2 {
+            color: #1565c0;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .file-systems {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .filesystem-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            border-top: 4px solid #1976d2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .filesystem-card h3 {
+            color: #1565c0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .filesystem-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .filesystem-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .filesystem-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .performance-section {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid #8e24aa;
+        }
+
+        .performance-section h2 {
+            color: #6a1b9a;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #6a1b9a;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-description {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .technical-highlights {
+            margin: 2rem 0;
+        }
+
+        .technical-highlights h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 0.5rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #e67e22;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-card h3 {
+            color: #d35400;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .tech-card .code-snippet {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .documents-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .documents-section h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+            border-bottom: 3px solid #9b59b6;
+            padding-bottom: 0.5rem;
+        }
+
+        .document-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .document-card {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .document-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .document-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .document-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .document-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .applications {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .applications h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .app-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #e17055;
+        }
+
+        .app-item strong {
+            color: #d63031;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid, .file-systems, .tech-grid, .document-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>File System Metadata Snapshotting</h1>
+            <div class="subtitle">Comprehensive Cross-Platform Data Recovery Solution</div>
+            <div class="project-type">Systems Programming • Data Recovery • File System Internals</div>
+        </div>
+
+        <div class="content">
+            <div class="executive-summary">
+                <h2>Executive Summary</h2>
+                <p>
+                    This project implements a comprehensive file system metadata snapshotting solution for two major production file systems: <strong>EXT4</strong> (Linux) and <strong>VFAT/FAT32</strong> (Windows). The system creates lightweight snapshots of file system metadata structures that can be used for data recovery even when the original storage device or file system becomes corrupted.
+                </p>
+                
+                <div class="innovation-highlight">
+                    <strong>Core Innovation:</strong> Extracting and preserving critical metadata structures in a compact, custom format that maintains file system hierarchy and block mapping information without storing actual file content, making recovery operations feasible even from partially damaged storage devices.
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h2>🚀 Key Features & Capabilities</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>💾 Cross-Platform Support</h3>
+                        <p>Native support for both EXT4 (Linux) and VFAT/FAT32 (Windows) file systems with deep understanding of internal structures.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>⚡ Lightweight Snapshots</h3>
+                        <p>Metadata-only storage approach creates compact snapshots without duplicating file content, enabling efficient backup operations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔧 Direct Block Access</h3>
+                        <p>Bypasses kernel file system layer using direct block device access, enabling recovery from unmountable or corrupted file systems.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🗂️ Complete Hierarchy Preservation</h3>
+                        <p>Maintains full directory structure and file organization, preserving parent-child relationships for accurate recovery.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔍 Advanced Filtering System</h3>
+                        <p>Sophisticated search capabilities with time-based, size, permission, and pattern-matching filters for efficient data location.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💻 Shell Interface</h3>
+                        <p>Unix-like command interface for navigation, file listing, extraction, and tree visualization of recovered file systems.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-section">
+                <h2>🏗️ Architecture & Implementation</h2>
+                <div class="file-systems">
+                    <div class="filesystem-card">
+                        <h3>🐧 EXT4 Implementation</h3>
+                        <ul>
+                            <li>Superblock structure analysis and extraction</li>
+                            <li>Group descriptor table processing (32-bit & 64-bit)</li>
+                            <li>Inode structure parsing with extent tree support</li>
+                            <li>Directory entry extraction and hierarchy building</li>
+                            <li>Extent-based and traditional block addressing</li>
+                            <li>Support for large file systems (>2TB)</li>
+                        </ul>
+                    </div>
+                    <div class="filesystem-card">
+                        <h3>🪟 VFAT/FAT32 Implementation</h3>
+                        <ul>
+                            <li>Boot sector and BPB (BIOS Parameter Block) analysis</li>
+                            <li>FAT table processing and cluster chain following</li>
+                            <li>Directory entry parsing with 8.3 format support</li>
+                            <li>Long filename (LFN) Unicode handling</li>
+                            <li>Cluster mapping and file reconstruction</li>
+                            <li>Deleted file recovery capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-section">
+                <h2>📊 Performance Characteristics</h2>
+                <div class="performance-stats">
+                    <div class="stat-card">
+                        <div class="stat-title">EXT4 Complexity</div>
+                        <div class="stat-description">O(n) time complexity where n is the number of files and directories. Efficient streaming processing for large file systems.</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Memory Efficiency</div>
+                        <div class="stat-description">Streaming algorithms prevent excessive memory usage, supporting file systems with millions of files.</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Storage Overhead</div>
+                        <div class="stat-description">~176 bytes per file for EXT4, ~36+ bytes per file for VFAT, plus fixed overhead for file system structures.</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Recovery Speed</div>
+                        <div class="stat-description">Linear search O(n) for files, O(log n) for hierarchical navigation, with parallel extraction capabilities.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="technical-highlights">
+                <h2>⚙️ Technical Implementation Highlights</h2>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h3>Direct Block Device Access</h3>
+                        <p>Bypasses kernel file system layer for robust recovery:</p>
+                        <div class="code-snippet">int fd = open("/dev/sda1", O_RDONLY);
+pread(fd, buffer, size, offset);</div>
+                        <p>Enables recovery from corrupted or unmountable file systems.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Extent Tree Processing</h3>
+                        <p>Handles EXT4's modern block allocation efficiently:</p>
+                        <div class="code-snippet">// Flattening extent trees
+// Sorting by logical block number
+// Recursive internal node processing</div>
+                        <p>Supports both extent-based and traditional addressing schemes.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Unicode LFN Support</h3>
+                        <p>Complete long filename handling for VFAT:</p>
+                        <div class="code-snippet">// UTF-16 to ASCII conversion
+// Multi-entry LFN reconstruction
+// Checksum validation</div>
+                        <p>Preserves complete filename information across platforms.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Advanced Filtering Engine</h3>
+                        <p>Sophisticated search and filtering capabilities:</p>
+                        <div class="code-snippet">filter mtime>2023-10-01
+filter size>100M perm=x
+filter name_contains=config</div>
+                        <p>Time-based, size, permission, and pattern matching filters.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="applications">
+                <h2>🎯 Real-World Applications</h2>
+                <div class="app-list">
+                    <div class="app-item">
+                        <strong>Enterprise Backup:</strong> Complement to traditional backup systems for metadata preservation
+                    </div>
+                    <div class="app-item">
+                        <strong>Forensic Analysis:</strong> Investigation of damaged or corrupted storage devices
+                    </div>
+                    <div class="app-item">
+                        <strong>Data Recovery Services:</strong> Professional data recovery operations and disaster recovery
+                    </div>
+                    <div class="app-item">
+                        <strong>System Administration:</strong> Proactive monitoring and recovery preparation
+                    </div>
+                    <div class="app-item">
+                        <strong>Academic Research:</strong> Study of file system structures and recovery techniques
+                    </div>
+                    <div class="app-item">
+                        <strong>Cloud Integration:</strong> Potential for distributed file system metadata preservation
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="documents-section">
+            <h2>📚 Project Documentation</h2>
+            <div class="document-links">
+                <a href="technical_report.pdf" class="document-card" target="_blank">
+                    <span class="document-icon">📋</span>
+                    <h3>Technical Report</h3>
+                    <p>Comprehensive technical documentation covering implementation details, architecture design, performance analysis, and testing methodologies for both EXT4 and VFAT file system implementations.</p>
+                </a>
+                
+                <a href="research_document.pdf" class="document-card" target="_blank">
+                    <span class="document-icon">🔬</span>
+                    <h3>Research Document</h3>
+                    <p>In-depth research paper detailing the theoretical foundations, file system internals analysis, algorithmic approaches, and comparative evaluation of metadata snapshotting techniques.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

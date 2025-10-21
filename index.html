@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Prajapat - Personal Website</title>
+    <title>Rahul Prajapat - AI Research & Systems Engineer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,49 +11,138 @@
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="lor/forwilly/index.html">LoR Info</a></li>
+                <li><a href="#academic-projects">Academic Projects</a></li>
+                <li><a href="#industry-work">Industry Work</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h1>Rahul Prajapat</h1>
+                <p class="hero-subtitle">AI Research & Systems Engineer</p>
+                <p class="hero-description">Designing cooperative AI systems and safeguarding deployments to widen access rather than gaps</p>
+                <div class="hero-links">
+                    <a href="resume_new.pdf" target="_blank" class="btn primary">📄 Resume/CV</a>
+                    <a href="#academic-projects" class="btn secondary">🔬 Research</a>
+                </div>
+            </div>
+        </section>
+
         <section id="about">
-            <h1>About Me</h1>
-            <p>Welcome to my personal website! I'm Rahul Prajapat, a Computer Science student with a passion for Database Systems, Systems Programming, and High-Performance Computing.</p>
-            <p>I specialize in developing efficient data structures, file systems, and concurrent algorithms. My work focuses on practical implementations of research concepts in systems and databases.</p>
-        </section>
-        <section id="projects">
-            <h1>Projects</h1>
-            <div class="work-summary">
-                <div class="project-card">
-                    <h3>🌳 Masstree Implementation</h3>
-                    <p>High-performance concurrent B+ tree structure with advanced locking mechanisms for multi-threaded database operations.</p>
-                    <p>
-                        <a href="projects/masstree/Project_Report.pdf" target="_blank" class="btn">📄 View Report</a>
-                        <a href="projects/masstree/index.ts" target="_blank" class="btn">💻 View Code</a>
-                    </p>
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="current-role">
+                    <h3>🚀 Current Position</h3>
+                    <p><strong>Software Engineer 2 at Uber</strong> - Building agentic systems and AI-powered tools that automate driver support, streamline operations, and improve user experiences at scale.</p>
                 </div>
-                <div class="project-card">
-                    <h3>📸 File System Metadata Snapshotting</h3>
-                    <p>Comprehensive analysis and implementation of file system metadata snapshotting mechanisms with performance optimization.</p>
-                    <p>
-                        <a href="projects/fs_snapshots/FILE_SYSTEM_METADATA_SNAPSHOTTING_REPORT.pdf" target="_blank" class="btn">📄 View Report</a>
-                        <a href="projects/fs_snapshots/index.ts" target="_blank" class="btn">💻 View Code</a>
-                    </p>
+                
+                <div class="research-interests">
+                    <h3>🎯 Research Interests</h3>
+                    <p>I'm passionate about <strong>cooperative AI and mechanism design</strong> - developing protocols and governance structures for AI deployments that are safe and empowering for everyone. My work focuses on:</p>
+                    <ul>
+                        <li><strong>Multi-agent systems:</strong> Designing mechanisms that align incentives and induce cooperation among learning agents</li>
+                        <li><strong>Network-aware AI:</strong> Understanding how algorithmic decisions cascade through social and technical networks</li>
+                        <li><strong>Algorithmic fairness:</strong> Ensuring AI systems widen access rather than deepen existing inequalities</li>
+                        <li><strong>Systems programming:</strong> High-performance data structures, concurrent algorithms, and file systems</li>
+                    </ul>
+                </div>
+
+                <div class="background">
+                    <h3>📚 Background</h3>
+                    <p>Computer Science graduate from <strong>IIT Bombay</strong> with a strong mathematical foundation and systems expertise. I believe technology's impact depends on deployment choices - my goal is to design principled mechanisms that make AI beneficial for everyone, not just early adopters.</p>
+                    <p>Currently preparing for graduate studies to formalize this mission with rigorous foundations in game theory, network science, and computational mechanism design.</p>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="lor/forwilly/index.html" class="btn">📋 Detailed Project Information for LoR</a>
+        </section>
+
+        <section id="academic-projects">
+            <h2>🔬 Academic Research Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card academic">
+                    <h3>💾 ReMassTree: Persistent Memory B-link Tree</h3>
+                    <p>High-performance persistent memory B-link tree with hierarchical concurrency control, addressing critical limitations in concurrent index structures. Achieved 3.159M ops/sec with 99.99% space efficiency.</p>
+                    <div class="project-links">
+                        <a href="projects/masstree/index.html" class="btn">🔍 View Project</a>
+                        <a href="projects/masstree/research_document.pdf" target="_blank" class="btn">📄 Paper</a>
+                    </div>
+                </div>
+                
+                <div class="project-card academic">
+                    <h3>🌳 Frequency-Aware Skewed Merkle Trees</h3>
+                    <p>Comprehensive analysis of frequency-aware blockchain optimizations. Discovered 30% performance improvements but identified fundamental limitations in consensus safety and state reversibility.</p>
+                    <div class="project-links">
+                        <a href="projects/skewed_merkle/index.html" class="btn">🔍 View Project</a>
+                        <a href="projects/skewed_merkle/study.pdf" target="_blank" class="btn">📄 Study</a>
+                    </div>
+                </div>
+                
+                <div class="project-card academic">
+                    <h3>💿 File System Metadata Snapshotting</h3>
+                    <p>Cross-platform metadata snapshotting solution for EXT4 and VFAT file systems. Enables data recovery from corrupted storage through direct block device access and efficient metadata preservation.</p>
+                    <div class="project-links">
+                        <a href="projects/fs_snapshots/index.html" class="btn">🔍 View Project</a>
+                        <a href="projects/fs_snapshots/technical_report.pdf" target="_blank" class="btn">📄 Report</a>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <section id="industry-work">
+            <h2>🏢 Industry Experience</h2>
+            <div class="industry-content">
+                <div class="current-work">
+                    <h3>Software Engineer 2 - Uber Technologies</h3>
+                    <p class="work-period">Current Role</p>
+                    <p>Building next-generation agentic systems that automate complex business processes and improve user experiences at global scale. My work spans AI applications, platform engineering, and organizational systems design.</p>
+                    
+                    <div class="work-highlights">
+                        <div class="highlight-item">
+                            <h4>🤖 Agentic Systems Development</h4>
+                            <p>Designed and deployed intelligent agents for driver support automation, reducing operational complexity while improving resolution times and user satisfaction.</p>
+                        </div>
+                        
+                        <div class="highlight-item">
+                            <h4>🧠 AI Team Collaboration</h4>
+                            <p>Working with Uber AI team on agentic web experiences that leverage existing AI infrastructure to streamline internal operations and user workflows.</p>
+                        </div>
+                        
+                        <div class="highlight-item">
+                            <h4>📊 Knowledge Systems</h4>
+                            <p>Built knowledge graphs for market requirements analysis and cross-organizational decision making, studying how system design choices shape incentives at scale.</p>
+                        </div>
+                        
+                        <div class="highlight-item">
+                            <h4>🛠️ Platform Engineering</h4>
+                            <p>Led tech migrations and platform deprecations across multiple teams, learning how organizational structures influence technical outcomes and user experiences.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="industry-projects-link">
+                        <a href="industry-projects.html" class="btn">🔍 View Detailed Industry Projects</a>
+                        <p class="note">Detailed case studies and technical approaches (within IP constraints)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="contact">
-            <h1>Get in Touch</h1>
-            <p>Want to collaborate or just say hi? Send me an email at <a href="mailto:your@email.com">your@email.com</a></p>
+            <h2>Get in Touch</h2>
+            <div class="contact-content">
+                <p>Interested in collaborative research, industry partnerships, or discussing AI governance and cooperative systems? I'd love to connect!</p>
+                <div class="contact-methods">
+                    <a href="mailto:your@email.com" class="contact-item">📧 Email</a>
+                    <a href="https://linkedin.com/in/yourprofile" class="contact-item">💼 LinkedIn</a>
+                    <a href="https://github.com/yourusername" class="contact-item">💻 GitHub</a>
+                </div>
+            </div>
         </section>
     </main>
+    
     <footer>
-        <p>&copy; 2024 Rahul Prajapat | <a href="resume_new.pdf" target="_blank">📄 Resume</a></p>
+        <p>&copy; 2024 Rahul Prajapat | AI Research & Systems Engineer</p>
+        <p>Building cooperative AI systems that widen access, not gaps</p>
     </footer>
     <script src="script.js"></script>
 </body>
